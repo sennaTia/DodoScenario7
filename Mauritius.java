@@ -51,6 +51,8 @@ public class Mauritius extends World
         }            
     }
     
+    
+    
     private static void initWorldInfo() {
          WORLD_READER = new WorldReader ( WORLD_FILE );
          WORLD_WIDTH  = WORLD_READER.getWorldWidth();

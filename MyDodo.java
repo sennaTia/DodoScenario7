@@ -12,7 +12,7 @@ public class MyDodo extends Dodo
 {
     /* ATTRIBUTE DECLARATIONS: */
     private int myNrOfStepsTaken;
-           
+
     public MyDodo() {
         super( EAST );
         /* INITIALISATION OF ATTRIBUTES: */
@@ -75,18 +75,17 @@ public class MyDodo extends Dodo
     }
 
     /**
-    * Places all the Egg objects in the world in a list.
-    * 
-    * @return List of Egg objects in the world
-    */
+     * Places all the Egg objects in the world in a list.
+     * 
+     * @return List of Egg objects in the world
+     */
     public List<Egg> getListOfEggsInWorld() {
         return getWorld().getObjects(Egg.class);
     }
-    
+
     public List<Integer> createListOfNumbers() {
         return new ArrayList<> (Arrays.asList( 2, 43, 7, -5, 12, 7 ));
     }
-    
 
     /**
      * Method for praciticing with lists.
@@ -99,7 +98,7 @@ public class MyDodo extends Dodo
     public void practiceWithListsOfSurpriseEgss( ){
         List<SurpriseEgg>  listOfEgss = SurpriseEgg.generateListOfSurpriseEggs( 12, getWorld() );
     }
-    
+
     public void faceDirection(int direction){
         if (direction < NORTH || direction > WEST){
             return;
@@ -108,21 +107,79 @@ public class MyDodo extends Dodo
             turnRight();
         }
     }
-    
+
     public void moveRandomly(){
- 
+
         Mauritius world = (Mauritius) getWorld();
         for (; myNrOfStepsTaken < Mauritius.MAXSTEPS; myNrOfStepsTaken++) {
             world.updateScore(Mauritius.MAXSTEPS - myNrOfStepsTaken);
             do {
                 faceDirection(randomDirection());
             } while (borderAhead() || fenceAhead());
- 
-            move();
- 
+
+            if (!borderAhead() && !fenceAhead()) {
+                move();
+                checkEgg();
+            }
+
         }
         world.updateScore(Mauritius.MAXSTEPS - myNrOfStepsTaken);
     }
+
+    public void checkEgg() {
+        Egg egg = (Egg) getOneIntersectingObject(Egg.class);
+        if (egg != null) {
+            Mauritius world = (Mauritius) getWorld();
+            world.updateScore(egg.getPoints());
+            getWorld().removeObject(egg);
+        }
+    }
+
+    public class Egg extends Actor {
+        public int getPoints() {
+            return 0;
+        }
+    }
+
+    public class BlauwEi extends Egg {
+        public int getPoints() {
+            return 1;
+        }
+    }
+
+    public class GoudEi extends Egg {
+        public int getPoints() {
+            return 5;
+        }
+    }
+
+    public void dodoRace() {
+                 if (nextEgg != null) {
+                if (nextEgg.getX() < getX()) {
+                    // faceEast();
+                    move();
+                }
+            }
+            }
+           
+    public void goToEgg () {
         
     }
 
+    public Egg findNearestEgg (){
+        List<Egg> eggs = getListOfEggsInWorld();
+        while (myNrOfStepsTaken < Mauritius.MAXSTEPS) {
+            Egg nextEgg = null;
+            int shortestEgg = Integer.MAX_VALUE;
+            for (Egg egg : eggs) {
+                int distancex = Math.abs(egg.getX() - getX());
+                int distancey = Math.abs(egg.getY() - getY());
+                int stepsNeeded = distancex + distancey;
+                if (stepsNeeded < shortestEgg) {
+                    shortestEgg = stepsNeeded;
+                    nextEgg = egg;
+                }
+            }
+        }
+    }
+}
