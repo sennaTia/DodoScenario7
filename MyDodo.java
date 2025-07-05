@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class MyDodo extends Dodo {
     // Houdt het aantal gemaakte stappen bij
     private int myNrOfStepsTaken;
-    // Telt de behaalde punten via eieren
+    
     private int NrOfEggs;
            
     public MyDodo() {
@@ -15,7 +15,7 @@ public class MyDodo extends Dodo {
     }
 
     public void act() {
-        // Leeg act()-blokje, logica wordt elders aangeroepen
+        // Leeg act()-blokje, 
     }
 
     /**
@@ -26,8 +26,6 @@ public class MyDodo extends Dodo {
             step();
             myNrOfStepsTaken++;
             ScoreBoard(); // Update scoreboard na elke stap
-        } else {
-            showError("Ik zit vast!");
         }
     }
 
@@ -112,9 +110,9 @@ public class MyDodo extends Dodo {
     }
 
     /**
-     * Zoekt het dichtstbijzijnde ei op.
+     * Zoekt het dichtstbijzijnde ei
      */
-    public Egg ReturnClosestEgg() {
+    public Egg ClosestEgg() {
         List<Egg> eggs = getWorld().getObjects(Egg.class);
         Egg closestEgg = null;
         int closestDistance = Integer.MAX_VALUE;
@@ -133,7 +131,7 @@ public class MyDodo extends Dodo {
     }
 
     /**
-     * Loopt naar de locatie van een specifiek ei.
+     * Loopt naar de locatie van een gevonden ei
      */
     public void GoToEgg(Egg egg) {
         int eggX = egg.getX();
@@ -142,10 +140,11 @@ public class MyDodo extends Dodo {
     }
 
     /**
-     * Voert een race uit waarbij Dodo zo veel mogelijk eieren probeert te verzamelen binnen de limiet.
+     * Voert een race uit waar dodo zoveel moeglijk eieren probeert te 
+     * verzamelen binnen 40 stappen
      */
     public void DodoRace() {
-        Egg egg = ReturnClosestEgg();
+        Egg egg = ClosestEgg();
 
         while (egg != null && myNrOfStepsTaken < Mauritius.MAXSTEPS) {
             GoToEgg(egg);
@@ -153,12 +152,12 @@ public class MyDodo extends Dodo {
 
             NrOfEggs += egg.getValue(); // Zorg dat getValue() bestaat in Egg!
             pickUpEgg();
-            egg = ReturnClosestEgg();
+            egg = ClosestEgg();
         }
     }
 
     /**
-     * Zorgt ervoor dat de score getoond en bijgewerkt wordt in de wereld.
+     * Zorgt ervoor dat de score getoond wordt
      */
     public void ScoreBoard() {
         Mauritius world = (Mauritius) getWorld();
