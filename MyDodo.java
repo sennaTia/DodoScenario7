@@ -7,17 +7,23 @@ public class MyDodo extends Dodo {
     private int myNrOfStepsTaken;
     private int NrOfEggs;
 
-    // constructor
+    /**
+     * Hier roep ik een constructor aan
+     */
     public MyDodo() {
         super(EAST);
         myNrOfStepsTaken = 0;
     }
 
-    // actiemethode 
+    /** 
+     * Hier roep ik de public void act aan die een programma laat lopen
+     */
     public void act() {
     }
 
-    // verplaatst Dodo
+    /**
+     * Deze functie beweegd de dodo 1 stap naar voren
+     */
     public void move() {
         if (canMove()) {
             step();
@@ -26,12 +32,16 @@ public class MyDodo extends Dodo {
         }
     }
 
-    // controleert of Dodo kan bewegen
+    /** 
+     * Deze functie kijkt of er niks voor de dodo staat als die wilt gaan bewegen
+     */
     public boolean canMove() {
         return !(borderAhead() || fenceAhead());
     }
 
-    // laat Dodo meerdere stappen zetten
+     /**
+      * Deze functie laat de dodo een grotere stap zetten in de richting waar die kijkt
+      */
     public void jump(int distance) {
         int nrStepsTaken = 0;
         while (nrStepsTaken < distance) {
@@ -40,36 +50,50 @@ public class MyDodo extends Dodo {
         }
     }
 
-    // geeft lijst van eieren in de wereld
+   
+    /**
+     * Deze functie geeft een lijst van alle eieren in de wereld
+     */
     public List<Egg> getListOfEggsInWorld() {
         return getWorld().getObjects(Egg.class);
     }
 
-    // maakt testlijst van getallen
+    /**
+     * Deze functie maakt een lijst met de getallen 2, 43, 7, -5, 12 en 7, en geeft die lijst terug als resultaat.
+     */
     public List<Integer> createListOfNumbers() {
         return new ArrayList<>(Arrays.asList(2, 43, 7, -5, 12, 7));
     }
 
-    // test ophalen van waarde uit lijst
+    /**
+     * Deze functie maakt een lijst met getallen en laat daarna het tweede getal uit die lijst zien in de console.
+     */
     public void practiceWithLists() {
         List<Integer> listOfNumbers = createListOfNumbers();
         System.out.println("Tweede getal: " + listOfNumbers.get(1));
     }
 
-    // test maken van SurpriseEgg lijst
+    /**
+     * Deze functie maakt een lijst met 12 SurpriseEgg-objecten door generateListOfSurpriseEggs aan te roepen en geeft de wereld (getWorld()) mee als parameter.
+     */
     public void practiceWithListsOfSurpriseEgss() {
         List<SurpriseEgg> listOfEgss = SurpriseEgg.generateListOfSurpriseEggs(12, getWorld());
     }
 
-    // draait Dodo naar opgegeven richting
+    /**
+     * Deze functie laat de dodo draaien naar de opgegeven directie
+     */
     public void faceDirection(int direction) {
+        
         while (getDirection() != direction) {
             if (direction < NORTH || direction > WEST) break;
             turnRight();
         }
     }
 
-    // laat Dodo naar coördinaten lopen
+    /**
+     * Deze functie laat de dodo naar een opgegeven plek lopen, zolang het nog niet te veel stappen heeft gezet, en in een directie die daar voor klopt
+     */
     public void gotoLocation(int coordX, int coordY) {
         while (getX() < coordX && myNrOfStepsTaken < Mauritius.MAXSTEPS) {
             faceDirection(EAST);
@@ -89,7 +113,9 @@ public class MyDodo extends Dodo {
         }
     }
 
-    // zoekt dichtstbijzijnde ei
+    /**
+     * Deze functie berekent waar het dichtstbijzijnde ei is en berekent de plek waar die zit.
+       */
     public Egg ClosestEgg() {
         List<Egg> eggs = getWorld().getObjects(Egg.class);
         Egg closestEgg = null;
@@ -108,14 +134,21 @@ public class MyDodo extends Dodo {
         return closestEgg;
     }
 
-    // loopt naar opgegeven ei
+    
+    /**(
+     * Loopt naar het gegeven ei waar net de locatie van berekent is
+     */
     public void GoToEgg(Egg egg) {
         int eggX = egg.getX();
         int eggY = egg.getY();
         gotoLocation(eggX, eggY);
     }
 
-    // voert eieren-verzamelrace uit
+    /**
+     * Deze functie speelt de dodo race af en laat hem steeds lopen naar het dichtstbijzijnde ei en pakt hem op waarvan die 1 punt krijgt per blauw ei 
+     * en 5 per goud ei
+     */
+    
     public void DodoRace() {
         Egg egg = ClosestEgg();
 
@@ -129,7 +162,9 @@ public class MyDodo extends Dodo {
         }
     }
 
-    // update het scoreboard
+    /**
+     * Deze functie update het scoreboard zodat die altijd gelijk is aan de stappen en de punten van de dodo
+     */
     public void ScoreBoard() {
         Mauritius world = (Mauritius) getWorld();
         world.updateScore(Mauritius.MAXSTEPS - myNrOfStepsTaken, NrOfEggs);
